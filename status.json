@@ -1,8 +1,5 @@
 {
-  "status": "pending",
-  "remaining_hours": null,
-  "total_hours": null,
-  "percentage_remaining": null,
-  "last_updated": null,
-  "raw_response": null
+  "status": "error",
+  "error": "All Kaggle quota endpoints failed:\n  1. https://www.kaggle.com/api/v1/users/alwintheodoric/kernelQuota \u2192 Got HTML instead of JSON (Content-Type: 'text/html; charset=utf-8'). HTTP 404. Page preview: '<!DOCTYPE html>\\r <html lang=\"en\">\\r \\r <head>\\r   <title>Kaggle: Your Home for Data Science</title>\\r   <meta charset=\"utf-8\" />\\r     <meta name=\"robots\" content=\"index, follow\" />\\r   <meta name=\"desc'. This usually means wrong credentials or a non-existent endpoint.\n  2. https://www.kaggle.com/api/v1/kernel/quota \u2192 Got HTML instead of JSON (Content-Type: 'text/html; charset=utf-8'). HTTP 404. Page preview: '<!DOCTYPE html>\\r <html lang=\"en\">\\r \\r <head>\\r   <title>Kaggle: Your Home for Data Science</title>\\r   <meta charset=\"utf-8\" />\\r     <meta name=\"robots\" content=\"index, follow\" />\\r   <meta name=\"desc'. This usually means wrong credentials or a non-existent endpoint.\n  3. https://www.kaggle.com/api/v1/kernels/quota \u2192 HTTP 401 Unauthorized. Double-check that KAGGLE_USERNAME and KAGGLE_KEY match your kaggle.json exactly.",
+  "last_updated": "2026-08-06T03:36:37.379357+00:00"
 }
