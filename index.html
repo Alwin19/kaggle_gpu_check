@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaggle GPU Quota</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <h1>Kaggle GPU Quota</h1>
+      <p class="subtitle">Weekly GPU hours remaining</p>
+    </header>
+
+    <!-- Gauge card -->
+    <div class="card">
+      <div class="gauge-wrap">
+        <!--
+          Semicircle arc:
+            centre (130, 115), radius 90
+            start  (40, 115)   end (220, 115)
+          Arc length = π × 90 ≈ 282.7 (must match ARC_LENGTH in script.js)
+        -->
+        <svg class="gauge-svg" viewBox="0 0 260 130" aria-hidden="true">
+          <path class="arc-bg"
+            d="M 40 115 A 90 90 0 0 1 220 115" />
+          <path class="arc-fill" id="arc-fill"
+            d="M 40 115 A 90 90 0 0 1 220 115" />
+        </svg>
+
+        <div class="gauge-pct text-muted" id="gauge-pct">—</div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Remaining</span>
+          <span class="stat-value text-muted" id="remaining-hours">— h</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Weekly Total</span>
+          <span class="stat-value text-muted" id="total-hours">— h</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info card -->
+    <div class="card info-card">
+      <div class="last-updated-row">
+        <span class="label">Last updated</span>
+        <span class="value" id="last-updated">—</span>
+      </div>
+      <div class="status-banner" id="status-banner"></div>
+    </div>
+
+    <!-- Refresh button -->
+    <button class="refresh-btn" id="refresh-btn" onclick="triggerRefresh()">
+      <span class="spin" id="refresh-icon">↻</span>
+      Request refresh
+    </button>
+
+    <!-- "Clear saved token" link — hidden until a token is stored -->
+    <button class="clear-token-link" id="clear-token-btn"
+            style="display:none" onclick="clearSavedToken()">
+      Clear saved GitHub token
+    </button>
+
+    <!-- Token panel — shown the first time the user clicks Refresh -->
+    <div class="card token-panel" id="token-panel">
+      <p>
+        To trigger a data refresh, paste a
+        <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener">
+          GitHub fine-grained Personal Access Token</a>
+        with <code>Actions: Write</code> permission for this repository.
+        The token is saved only in <em>your</em> browser's <code>localStorage</code> —
+        it is never sent anywhere except the GitHub API.
+      </p>
+      <div class="input-row">
+        <input id="gh-token-input" type="password"
+               placeholder="github_pat_…" autocomplete="off" />
+        <button onclick="saveToken()">Save &amp; refresh</button>
+      </div>
+      <p class="token-hint">
+        Need help? See the README for step-by-step instructions on creating the token.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        Auto-updated every 6 h via
+        <a href="https://github.com/features/actions" target="_blank" rel="noopener">
+          GitHub Actions</a>.
+        Source on
+        <a id="repo-link" href="#" target="_blank" rel="noopener">GitHub</a>.
+      </p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Wire up the repo link in the footer once config is loaded
+    window.addEventListener("DOMContentLoaded", () => {
+      loadConfig().then(() => {
+        const { repo_owner, repo_name } = cfg;
+        if (repo_owner && repo_name &&
+            repo_owner !== "YOUR_GITHUB_USERNAME" &&
+            repo_name  !== "YOUR_REPO_NAME") {
+          document.getElementById("repo-link").href =
+            `https://github.com/${repo_owner}/${repo_name}`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

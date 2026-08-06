@@ -1,0 +1,6 @@
+{
+  "repo_owner": "YOUR_GITHUB_USERNAME",
+  "repo_name": "YOUR_REPO_NAME",
+  "workflow_id": "update-kaggle-quota.yml",
+  "branch": "main"
+}
