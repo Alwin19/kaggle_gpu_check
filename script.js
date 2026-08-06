@@ -69,7 +69,7 @@ function renderStatus(data) {
     els.lastUpdated().textContent = "never";
   }
 
-  if (status === "error") {
+  if (status === "error" || status === "parse_error") {
     showBanner("error", error || "Unknown error from fetch_quota.py");
     setGauge(null);
     return;

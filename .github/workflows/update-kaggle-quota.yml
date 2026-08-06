@@ -38,6 +38,10 @@ jobs:
           # Injected from GitHub Secrets — never logged or exposed
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        # fetch_quota.py is designed to always exit 0 (it writes errors to
+        # status.json instead of crashing), but continue-on-error ensures the
+        # commit step below always runs even if something unexpected happens.
+        continue-on-error: true
         run: python fetch_quota.py
 
       - name: Commit and push status.json
