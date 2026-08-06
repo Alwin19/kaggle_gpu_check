@@ -1,6 +1,6 @@
 {
-  "repo_owner": "YOUR_GITHUB_USERNAME",
-  "repo_name": "YOUR_REPO_NAME",
+  "repo_owner": "Alwin19",
+  "repo_name": "kaggle_gpu_check",
   "workflow_id": "update-kaggle-quota.yml",
   "branch": "main"
 }
