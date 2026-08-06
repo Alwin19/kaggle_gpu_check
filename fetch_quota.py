@@ -43,11 +43,16 @@ _HEADERS = {
 
 
 def _endpoints(username: str) -> list[str]:
+    # Order determined by live testing:
+    #   /kernels/quota          → confirmed to exist (returns 401 with wrong creds, not 404)
+    #   /users/{u}/kernelQuota  → 404 confirmed dead
+    #   /kernel/quota           → 404 confirmed dead
+    # New candidates at the bottom in case Kaggle adds them.
     return [
-        f"{_BASE}/users/{username}/kernelQuota",
-        f"{_BASE}/kernel/quota",
         f"{_BASE}/kernels/quota",
+        f"{_BASE}/users/{username}/kernels/quota",
         f"{_BASE}/users/{username}/acceleratorQuota",
+        f"{_BASE}/kernel/accelerator/quota",
     ]
 
 
@@ -145,10 +150,6 @@ def fetch_quota(username: str, key: str) -> dict:
         msg = f"{url} → {detail or f'HTTP {code}'}"
         print(f"[SKIP] {msg}")
         errors.append(msg)
-
-        # Wrong credentials: no point hammering the other endpoints.
-        if code == 401:
-            break
 
     raise RuntimeError(
         "All Kaggle quota endpoints failed:\n" +
